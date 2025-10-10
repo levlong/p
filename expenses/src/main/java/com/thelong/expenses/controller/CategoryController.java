@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.thelong.expenses.model.Category;
 import com.thelong.expenses.model.dto.CategoryDto;
+import com.thelong.expenses.model.enums.CategoryType;
 import com.thelong.expenses.service.CategoryServiceImpl;
 
 @RestController
@@ -43,5 +44,16 @@ public class CategoryController {
     public ResponseEntity<Category> remove(@PathVariable int id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    private List<CategoryDto> categories = 
+    List.of(new CategoryDto(1, 1, "Shopping", CategoryType.expense),
+            new CategoryDto(2, 1, "Gaming", CategoryType.expense),
+            new CategoryDto(3, 1, "Blaming", CategoryType.expense),
+            new CategoryDto(4, 1, "Saying", CategoryType.expense));
+
+    @GetMapping("/mock")
+    public ResponseEntity<List<CategoryDto>> mock() {
+        return ResponseEntity.ok(categories);
     }
 }
