@@ -7,6 +7,6 @@
     + Spring JPA.
     + Spring Security (Basic).
         -- Tweak some default spring security behavior: csrf, session state, filters => All configs can be found in Security Configuration file.
-        -- This app will authenticate use by jwt.
+        -- This app will authenticate use by jwt
 - Tool build: maven.
 - MySQL.
