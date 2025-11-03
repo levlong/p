@@ -23,16 +23,22 @@ public class CategoryController {
     @Autowired
     CategoryServiceImpl service;
 
-    @PostMapping("/new")
-    public ResponseEntity<Category> newCategory(@RequestBody CategoryDto request) {
-        Category addedCategory = service.create(request);
-        return new ResponseEntity<>(addedCategory, HttpStatus.CREATED);
-    }
-
+    /**
+     * This function will return the category by user_id.
+     * 
+     * @param id
+     * @return
+     */
     @GetMapping("/get/{id}")
     public ResponseEntity<List<CategoryDto>> all(@PathVariable int id) {
         List<CategoryDto> categories = service.getAllByUserId(id);
         return ResponseEntity.ok(categories);
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<Category> newCategory(@RequestBody CategoryDto request) {
+        Category addedCategory = service.create(request);
+        return new ResponseEntity<>(addedCategory, HttpStatus.CREATED);
     }
 
     @GetMapping("/one/{id}")
@@ -46,11 +52,13 @@ public class CategoryController {
         return ResponseEntity.noContent().build();
     }
 
-    private List<CategoryDto> categories = 
-    List.of(new CategoryDto(1, 1, "Shopping", CategoryType.expense),
-            new CategoryDto(2, 1, "Gaming", CategoryType.expense),
-            new CategoryDto(3, 1, "Blaming", CategoryType.expense),
-            new CategoryDto(4, 1, "Saying", CategoryType.expense));
+    /**
+     * Ignore this.
+     */
+    private List<CategoryDto> categories = List.of(new CategoryDto(1, "Shopping", CategoryType.expense),
+            new CategoryDto(1, "Gaming", CategoryType.expense),
+            new CategoryDto(1, "Blaming", CategoryType.expense),
+            new CategoryDto(1, "Saying", CategoryType.expense));
 
     @GetMapping("/mock")
     public ResponseEntity<List<CategoryDto>> mock() {

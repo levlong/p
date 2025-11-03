@@ -7,27 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.thelong.expenses.model.Category;
-import com.thelong.expenses.model.User;
 import com.thelong.expenses.model.converter.CategoryEntityToDto;
 import com.thelong.expenses.model.dto.CategoryDto;
 import com.thelong.expenses.repo.CategoryRepo;
-import com.thelong.expenses.repo.UserRepo;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private UserRepo userRepo;
 
     @Autowired
     private CategoryRepo categoryRepo;
 
     @Override
     public Category create(CategoryDto request) {
-        User requestUser = userRepo.findById(request.getUser_id())
-                .orElseThrow(() -> new RuntimeException("User " + request.getUser_id() + " not found!"));
 
         Category newCategory = new Category();
-        newCategory.setUser(requestUser);
+        newCategory.setUserId(request.getUser_id());
         newCategory.setName(request.getName());
         newCategory.setType(request.getType());
         return categoryRepo.save(newCategory);
