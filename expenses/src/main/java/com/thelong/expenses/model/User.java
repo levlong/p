@@ -35,7 +35,7 @@ public class User {
     @Column(name = "password_hash")
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Category> categories;
 
     @CreationTimestamp

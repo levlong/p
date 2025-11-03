@@ -8,39 +8,26 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.thelong.expenses.model.Category;
 import com.thelong.expenses.model.Transaction;
-import com.thelong.expenses.model.User;
 import com.thelong.expenses.model.dto.TransactionDto;
 import com.thelong.expenses.model.enums.CategoryType;
-import com.thelong.expenses.repo.CategoryRepo;
 import com.thelong.expenses.repo.TransactionRepo;
-import com.thelong.expenses.repo.UserRepo;
 
 @Service
 public class TransactionServiceImpl implements TransactionService {
-    @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
-    private CategoryRepo categoryRepo;
 
     @Autowired
     private TransactionRepo transactionRepo;
 
     @Override
     public Transaction create(TransactionDto request) {
-        User user = userRepo.findById(request.getUser_id())
-                .orElseThrow(() -> new RuntimeException("User id " + request.getUser_id() + " not found!"));
-
-        Category category = categoryRepo.findById(request.getCategory_id())
-                .orElseThrow(() -> new RuntimeException("Category id " + request.getCategory_id() + " not found!"));
 
         Transaction transaction = new Transaction();
-        transaction.setUser(user);
-        transaction.setCategory(category);
+        transaction.setUserId(request.getUser_id());
+        transaction.setCategoryId(request.getCategory_id());
         transaction.setAmount(request.getAmount());
         transaction.setDescription(request.getDescription());
+        
         return transactionRepo.save(transaction);
     }
 
